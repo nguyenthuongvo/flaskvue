@@ -2,30 +2,6 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
 
-
-# configuration
-DEBUG = True
-
-BOOKS = [
-    {
-        'title': 'On the Road',
-        'author': 'Jack Kerouac',
-        'read': True
-    },
-    {
-        'title': 'Harry Potter and the Philosopher\'s Stone',
-        'author': 'J. K. Rowling',
-        'read': False
-    },
-    {
-        'title': 'Green Eggs and Ham',
-        'author': 'Dr. Seuss',
-        'read': True
-    }
-]
-
-
-
 if __name__ == '__main__':
 
     app = Flask(__name__, instance_relative_config=True)
@@ -38,25 +14,15 @@ if __name__ == '__main__':
 
     # enable CORS
     CORS(app, resources={r'/*': {'origins': '*'}})
+    
+    # register the database commands
+    from core import db
 
-    # sanity check route
-    @app.route('/ping', methods=['GET'])
-    def ping_pong():
-        return jsonify('pong!')
+    db.init_app(app)
 
-    @app.route('/books', methods=['GET', 'POST'])
-    def all_books():
-        response_object = {'status': 'success'}
-        if request.method == 'POST':
-            post_data = request.get_json()
-            BOOKS.append({
-                'title': post_data.get('title'),
-                'author': post_data.get('author'),
-                'read': post_data.get('read')
-            })
-            response_object['message'] = 'Book added!'
-        else:
-            response_object['books'] = BOOKS
-        return jsonify(response_object)
+    from core import auth, blog
+
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)
 
     app.run()

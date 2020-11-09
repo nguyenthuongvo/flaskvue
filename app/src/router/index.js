@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Ping from '../views/Ping.vue';
 import Books from '../views/Books.vue';
+import Blog from '../views/Blog.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/books',
     name: 'Books',
     component: Books,
+  },
+  {
+    path: '/blog',
+    name: 'Blog',
+    component: Blog,
   },
   {
     path: '/about',
