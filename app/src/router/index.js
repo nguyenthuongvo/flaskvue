@@ -6,6 +6,8 @@ import Books from '../views/Books.vue';
 import Blog from '../views/Blog.vue';
 
 Vue.use(VueRouter);
+Vue.prototype.$appName = 'Vo Nguyen';
+Vue.prototype.$BASE_URL = 'http://localhost:5000';
 
 const routes = [
   {

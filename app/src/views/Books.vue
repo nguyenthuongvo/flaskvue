@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     getBooks() {
-      const path = 'http://localhost:5000/books';
+      const path = this.$BASE_URL + '/books';
       axios.get(path)
         .then((res) => {
           this.books = res.data.books;
@@ -105,7 +105,7 @@ export default {
         });
     },
     addBook(payload) {
-      const path = 'http://localhost:5000/books';
+      const path = this.$BASE_URL + '/books';
       axios.post(path, payload)
         .then(() => {
           this.getBooks();
